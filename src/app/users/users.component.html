@@ -1,22 +1,30 @@
-<div class="search-for">
-    <h1>Search for:</h1>
-    <input type="text" [formControl]="searchTerm">
-</div>
+<div *ngIf="(vm$ | async) as vm">
 
-
-<div class="search-page-size">
-    <h1>Search page size:</h1>
-    <div>
-        <button *ngFor="let num of pullFacadeService.pagination.pageSizes" click="setPageSize(num)">{{num}}</button>
+    <div class="search-for">
+        <h1>Search for:</h1>
+        <input type="text" [formControl]="searchTerm">
     </div>
-</div>
-<hr>
-<div *ngFor="let user of (users$ | async)">
-    <p>Name: {{user.name.first}}</p>
-    <p>Last Name: {{user.name.last}}</p>
-    <p>Gender: {{user.gender}}</p>
-</div>
-<hr>
 
-<button (click)="findAllUsers$()">Load Users</button>
-<button (click)="showPageSize()">Show page size</button>
+
+    <div class="search-page-size">
+        <h1>Search page size:</h1>
+        <div>
+            <button class="options" *ngFor="let pageSize of vm.pagination.pageSizes"
+                [ngClass]="{active: pageSize === vm.pagination.selectedSize}"
+                (click)="pushFacadeService.updatePagination(pageSize)">
+                {{pageSize}}
+            </button>
+        </div>
+    </div>
+    <hr>
+    <div *ngFor="let user of vm.users">
+        <p>Name: {{user.name.first}}</p>
+        <p>Last Name: {{user.name.last}}</p>
+        <p>Gender: {{user.gender}}</p>
+    </div>
+    <hr>
+
+    <button (click)="findAllUsers$()">Load Users</button>
+    <button (click)="showPageSize()">Show page size</button>
+
+</div>
