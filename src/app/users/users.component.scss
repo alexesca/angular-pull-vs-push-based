@@ -1,0 +1,13 @@
+.search-for {
+    display: flex;
+    flex-flow:    column;
+}
+
+.search-page-size {
+    display: flex;
+    flex-flow: column;
+    div {
+        display: flex;
+    flex-flow: row;
+    }
+}
